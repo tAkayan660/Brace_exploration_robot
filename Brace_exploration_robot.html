@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>  
+<meta name="viewport" content="width=1000," /> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Style-Type" content="text/css">  
+<meta name="format-detection" content="telephone=no">
+<link media="only screen and (max-device-width:799px)"
+href="Phone.css" type="text/css" rel="stylesheet" />
+<link media="only screen and (min-device-width:800px)"
+href="Tablet.css" type="text/css" rel="stylesheet" />
+<!--[if IE]>
+<link href="PC.css" type="text/css" rel="stylesheet" />
+<![endif]-->
+<title>Brace exploration robot</title>
+<script type="text/javascript" src="/webiopi.js"></script>
+<script type="text/javascript">
+webiopi().ready(function()
+{	// Initialize
+	drive(0);
+	driveSUB(0);
+	vlevel(5);
+ 	timerID = setInterval("onAdcButtonClick()",0);
+});
+
+
+function drive(mode)
+{   // Change drive mode. Stop, Forward, Backward, CW, CCW
+  webiopi().callMacro("ChangeDriveMode", mode);
+}
+
+function driveSUB(modeSUB)
+{   // Change mode sub. Stop, Forward_roll, Backward_roll
+  webiopi().callMacro("ChangeModeSUB", modeSUB);
+}
+
+function vlevel(level)
+{	// Change Voltage Level.
+	webiopi().callMacro("ChangeVoltageLevel", level);
+}
+
+function forefootbtn(forefoot)
+{	// Change Forefoot Btn.
+	webiopi().callMacro("ChangeForefootBtn", forefoot);
+}
+
+function camerabtn(camera)
+{	// Change Camera Btn.
+	webiopi().callMacro("ChangeCameraBtn", camera);
+}
+
+function snapshot(shot)
+{	// Change Camera Btn.
+	webiopi().callMacro("ChangeShotBtn", shot);
+}
+
+function onAdcButtonClick()
+{
+  webiopi().callMacro("GetCh1Value", [], callbackGetCh1Value);
+}
+
+</script>
+<script type="text/javascript">
+window.onload = function() {
+  //タイマー起動
+  timerID = setInterval("callbackGetCh1Value()", 0);
+};
+
+//副足を動かす
+
+}
+</script>
+<style type="text/css">
+  button {
+    margin: 2px 2px 2px 2px;
+    width: 80px;
+    height: 70px;
+    font-size: 14pt;
+    font-weight: bold;
+    color: black;
+  }
+
+  #gpio25.LOW {
+    background-color: White;
+  }
+
+  #gpio25.HIGH {
+    background-color: Red;
+  }
+
+  #SUB_img {
+    display: block;
+  }
+    
+  .clock {
+    position: absolute;
+  }
+</style>
+</head>
+<body>
+
+<div id="Travel" align="center"> 
+  <table border="0">
+    <tbody>
+      <tr>
+        <td align="center" width="70" height="70">
+          走行
+        </td>
+        <td align="center" width="70" height="70">
+          <button value="Forward" onclick="drive(1)" data-role="none" style="width: auto;padding:0;margin:0;background:none;border:0;font-size:0;line-height:0;overflow: visible;cursor:pointer;">
+            <img src="images/Travel/Forward.png" alt="sample button" width="70" height="70" title="sample button" class="alignnone size-full wp-image-598" />
+          </button>  
+        </td>
+        <td align="center" width="70" height="70"></td>
+      </tr>
+      <tr>
+        <td align="center" width="70" height="70">
+          <button value="Turning CCW" onclick="drive(4)" data-role="none" style="width: auto;padding:0;margin:0;background:none;border:0;font-size:0;line-height:0;overflow: visible;cursor:pointer;">
+            <img src="images/Travel/CCW.png" alt="sample button" width="70" height="70" title="sample button" class="alignnone size-full wp-image-598" />
+          </button>
+        </td>
+        <td align="center" width="70" height="70">
+          <button value="Stop" onclick="drive(0)" data-role="none" style="width: auto;padding:0;margin:0;background:none;border:0;font-size:0;line-height:0;overflow: visible;cursor:pointer;">
+            <img src="images/Travel/Stop.png" alt="sample button" width="60" height="60" title="sample button" class="alignnone size-full wp-image-598" />
+          </button>
+        </td>
+        <td align="center" width="70" height="70">
+          <button value="Turning CW" onclick="drive(3)" data-role="none" style="width: auto;padding:0;margin:0;background:none;border:0;font-size:0;line-height:0;overflow: visible;cursor:pointer;">
+            <img src="images/Travel/CW.png" alt="sample button" width="70" height="70" title="sample button" class="alignnone size-full wp-image-598" />
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td align="center" width="70" height="70"></td>
+        <td align="center" width="70" height="70">
+          <button value="Backward" onclick="drive(2)" data-role="none" style="width: auto;padding:0;margin:0;background:none;border:0;font-size:0;line-height:0;overflow: visible;cursor:pointer;">
+            <img src="images/Travel/Backward.png" alt="sample button" width="70" height="70" title="sample button" class="alignnone size-full wp-image-598" />
+          </button>
+        </td>
+        <td align="center" width="70" height="70"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="Foot" align="center">
+  <table border="0">
+    <tbody>
+      <tr>
+        <td align="center" width="60" height="10">
+          前足
+        </td>
+        <td align="center" width="30" height="10"></td>
+        <td align="center" width="60" height="10">
+          副足
+        </td>
+      <tr>
+        <td align="center" width="60" height="60">
+          <button value="Forefoot_UP" onclick="forefootbtn(1)" data-role="none" style="width: auto;padding:0;margin:0;background:none;border:0;font-size:0;line-height:0;overflow: visible;cursor:pointer;">
+            <img src="images/Foot/Forward_foot.png" alt="sample button" width="60" height="60" title="sample button" class="alignnone size-full wp-image-598" />
+          </button>  
+        </td>
+        <td align="center" width="30" height="60"></td>
+        <td align="center" width="60" height="60">
+          <button value="Forward_roll" onclick="driveSUB(1)" data-role="none" style="width: auto;padding:0;margin:0;background:none;border:0;font-size:0;line-height:0;overflow: visible;cursor:pointer;">
+            <img src="images/Foot/Forward_foot.png" alt="sample button" width="60" height="60" title="sample button" class="alignnone size-full wp-image-598" />
+          </button>  
+        </td>
+      </tr>
+      <tr>
+        <td align="center" width="60" height="60">
+          <button value="Forefoot_Mid" onclick="forefootbtn(0)" data-role="none" style="width: auto;padding:0;margin:0;background:none;border:0;font-size:0;line-height:0;overflow: visible;cursor:pointer;">
+            <img src="images/Foot/Mid.png" alt="sample button" width="60" height="40" title="sample button" class="alignnone size-full wp-image-598" />
+          </button> 
+        </td>
+        <td align="center" width="30" height="60"></td>
+        <td align="center" width="60" height="60">
+          <button value="Stop_roll" onclick="driveSUB(0)" data-role="none" style="width: auto;padding:0;margin:0;background:none;border:0;font-size:0;line-height:0;overflow: visible;cursor:pointer;">
+            <img src="images/Foot/Stop_roll.png" alt="sample button" width="60" height="40" title="sample button" class="alignnone size-full wp-image-598" />
+          </button> 
+        </td>
+      </tr>
+      <tr>
+        <td align="center" width="60" height="60">
+          <button value="Forefoot_Dwn" onclick="forefootbtn(2)" data-role="none" style="width: auto;padding:0;margin:0;background:none;border:0;font-size:0;line-height:0;overflow: visible;cursor:pointer;">
+            <img src="images/Foot/Backward_foot.png" alt="sample button" width="60" height="60" title="sample button" class="alignnone size-full wp-image-598" />
+          </button>
+        </td>
+        <td align="center" width="30" height="60"></td>
+        <td align="center" width="60" height="60">
+          <button value="Backward_roll" onclick="driveSUB(2)" data-role="none" style="width: auto;padding:0;margin:0;background:none;border:0;font-size:0;line-height:0;overflow: visible;cursor:pointer;">
+            <img src="images/Foot/Backward_foot.png" alt="sample button" width="60" height="60" title="sample button" class="alignnone size-full wp-image-598" />
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="Camera_Servo" align="center">
+  カメラ操作
+ 	<table border="0">
+   	<tbody>
+			<tr>
+       	<td align="center" width="70" height="70">
+       		<button value="Camera_UP_L" onclick="camerabtn(5)" data-role="none" style="width: auto;padding:0;margin:0;background:none;border:0;font-size:0;line-height:0;overflow: visible;cursor:pointer;">
+        		<img src="images/Camera_Servo/Camera_UP_L.png" alt="sample button" width="50" height="50" title="sample button" class="alignnone size-full wp-image-598" />
+       		</button>
+       	</td>
+				<td align="center" width="70" height="70">
+       		<button value="Camera_UP" onclick="camerabtn(1)" data-role="none" style="width: auto;padding:0;margin:0;background:none;border:0;font-size:0;line-height:0;overflow: visible;cursor:pointer;">
+         		<img src="images/Camera_Servo/Camera_UP.png" alt="sample button" width="70" height="70" title="sample button" class="alignnone size-full wp-image-598" />
+       		</button>  
+       	</td>
+				<td align="center" width="70" height="70">
+  				<button value="Camera_UP_R" onclick="camerabtn(6)" data-role="none" style="width: auto;padding:0;margin:0;background:none;border:0;font-size:0;line-height:0;overflow: visible;cursor:pointer;">
+         		<img src="images/Camera_Servo/Camera_UP_R.png" alt="sample button" width="50" height="50" title="sample button" class="alignnone size-full wp-image-598" />
+       		</button>
+       	</td>
+     	</tr>
+     	<tr>
+       	<td align="center" width="70" height="70">
+       		<button value="Camera_L" onclick="camerabtn(4)" data-role="none" style="width: auto;padding:0;margin:0;background:none;border:0;font-size:0;line-height:0;overflow: visible;cursor:pointer;">
+         		<img src="images/Camera_Servo/Camera_L.png" alt="sample button" width="70" height="70" title="sample button" class="alignnone size-full wp-image-598" />
+       		</button>
+       	</td>
+       	<td align="center" width="70" height="70">
+       		<button value="Camera_0" onclick="camerabtn(0)" data-role="none" style="width: auto;padding:0;margin:0;background:none;border:0;font-size:0;line-height:0;overflow: visible;cursor:pointer;">
+         		<img src="images/Camera_Servo/Camera_0.png" alt="sample button" width="60" height="60" title="sample button" class="alignnone size-full wp-image-598" />
+       		</button>
+       	</td>
+       	<td align="center" width="70" height="70">
+       		<button value="Camera_R" onclick="camerabtn(3)" data-role="none" style="width: auto;padding:0;margin:0;background:none;border:0;font-size:0;line-height:0;overflow: visible;cursor:pointer;">
+     	    	<img src="images/Camera_Servo/Camera_R.png" alt="sample button" width="70" height="70" title="sample button" class="alignnone size-full wp-image-598" />
+       		</button>
+       	</td>
+     	</tr>
+     	<tr>
+       	<td align="center" width="70" height="70">
+       		<button value="Camera_Dwn_L" onclick="camerabtn(7)" data-role="none" style="width: auto;padding:0;margin:0;background:none;border:0;font-size:0;line-height:0;overflow: visible;cursor:pointer;">
+        		<img src="images/Camera_Servo/Camera_Dwn_L.png" alt="sample button" width="50" height="50" title="sample button" class="alignnone size-full wp-image-598" />
+       		</button>
+       	</td>
+       	<td align="center" width="70" height="70">
+      		<button value="Camera_Dwn" onclick="camerabtn(2)" data-role="none" style="width: auto;padding:0;margin:0;background:none;border:0;font-size:0;line-height:0;overflow: visible;cursor:pointer;">
+        		<img src="images/Camera_Servo/Camera_Dwn.png" alt="sample button" width="70" height="70" title="sample button" class="alignnone size-full wp-image-598" />
+      		</button>
+      	</td>
+       	<td align="center" width="70" height="70">
+      		<button value="Turning Camera_Dwn_R" onclick="camerabtn(8)" data-role="none" style="width: auto;padding:0;margin:0;background:none;border:0;font-size:0;line-height:0;overflow: visible;cursor:pointer;">
+         		<img src="images/Camera_Servo/Camera_Dwn_R.png" alt="sample button" width="50" height="50" title="sample button" class="alignnone size-full wp-image-598" />
+      		</button>
+      	</td>
+    	</tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="Camera" align="center">
+  <img src="http://192.168.0.102:9000/?action=stream" />
+</div>
+
+<div id="Level" align="center">
+    <center>Motor level
+    <form>1
+      <input type="radio" name="vl" onclick="vlevel(1)" data-role="none">
+      <input type="radio" name="vl" onclick="vlevel(2)" data-role="none">
+      <input type="radio" name="vl" onclick="vlevel(3)" data-role="none">
+      <input type="radio" name="vl" onclick="vlevel(4)" data-role="none">
+      <input type="radio" name="vl" onclick="vlevel(5)" data-role="none" checked>
+      <input type="radio" name="vl" onclick="vlevel(6)" data-role="none">
+      <input type="radio" name="vl" onclick="vlevel(7)" data-role="none">
+      <input type="radio" name="vl" onclick="vlevel(8)" data-role="none">
+      <input type="radio" name="vl" onclick="vlevel(9)" data-role="none">
+      <input type="radio" name="vl" onclick="vlevel(10)" data-role="none">
+    10</form>
+    </center>
+  </div>
+
+<div id="Snapshot" align="center"> 
+ 	<table border="0">
+   	<tbody>
+  		<tr>
+  			<td align="center" width="70" height="70">
+       		<button value="Snapshot" onclick="snapshot(0)" data-role="none" style="width: auto;padding:0;margin:0;background:none;border:0;font-size:0;line-height:0;overflow: visible;cursor:pointer;">
+         		<img src="images/Camera_Servo/Snapshot.png" alt="sample button" width="200" height="50" title="sample button" class="alignnone size-full wp-image-598" />
+      		</button>  
+      	</td>
+    	</tr>
+  	</tbody>
+	</table>
+</div>
+
+<div id="SUB_img">
+<img src="images/Sub/sub.png" width="60" height="250" id="image_sec" class="clock" style="transform: rotate(0deg); -webkit-transform: rotate(0deg);">
+</div>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+body {  
+    text-align: center;
+
+} 
+
+#Travel{
+    -webkit-transform: scale(0.9);  
+    -moz-transform: scale(0.9);
+    position:absolute; left:0; top:260px; width:200px;
+}
+
+#SUB_img{
+    -webkit-transform: scale(0.7);  
+    -moz-transform: scale(0.7);
+    position:absolute; right:0; top:330px; width:250px;
+}
+
+#Foot{
+    -webkit-transform: scale(0.9);  
+    -moz-transform: scale(0.9);
+    position:absolute; left:0; top:30px; width:210px;
+}
+
+#Camera_Servo{
+    -webkit-transform: scale(0.9);  
+    -moz-transform: scale(0.9);
+    position:absolute; right:0; top:30px; width:215px;
+}
+
+div#Camera{
+    -webkit-transform: scale(0.9);  
+    -moz-transform: scale(0.9); 
+    width: 640px;
+    margin: 0 auto;  
+    text-align: left;    
+}
+
+div#Level{ 
+    width: 300px;
+    margin: 0 auto;
+    text-align: left;
+    top:1000px; 
+}
+
+#Snapshot{
+    -webkit-transform: scale(0.9);  
+    -moz-transform: scale(0.9);
+    position:absolute; right:0; top:260px; width:215px;
+}
